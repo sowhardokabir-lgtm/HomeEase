@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset Password – HomeEase</title>
+
+<link rel="icon" type="image/x-icon" href="image/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+<style>
+:root {
+    --primary:#38bdf8;
+    --secondary:#2563eb;
+
+    --bg-gradient:radial-gradient(circle at top,
+        #0f172a 0%,
+        #020617 65%,
+        #020617 100%
+    );
+
+    --card-bg:rgba(2,6,23,.97);
+    --text-main:#f8fafc;
+    --text-muted:#94a3b8;
+
+    --input-bg:rgba(15,23,42,.95);
+    --border:1px solid rgba(56,189,248,.35);
+
+    --btn-gradient:linear-gradient(
+        135deg,#7dd3fc 0%,#38bdf8 45%,#2563eb 100%
+    );
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:var(--bg-gradient);
+    color:var(--text-main);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.card{
+    width:90%;
+    max-width:410px;
+    padding:26px;
+    background:var(--card-bg);
+    border-radius:18px;
+    border:var(--border);
+    box-shadow:0 18px 45px rgba(56,189,248,.25);
+}
+
+h3{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+p{
+    text-align:center;
+    font-size:.85rem;
+    color:var(--text-muted);
+    margin-bottom:18px;
+}
+
+input{
+    width:100%;
+    padding:11px;
+    border-radius:10px;
+    border:var(--border);
+    background:var(--input-bg);
+    color:var(--text-main);
+    margin-bottom:14px;
+}
+
+input:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 2px rgba(56,189,248,.45);
+}
+
+button{
+    width:100%;
+    padding:11px;
+    border-radius:999px;
+    border:none;
+    background:var(--btn-gradient);
+    font-weight:600;
+    cursor:pointer;
+}
+
+.back-link{
+    margin-top:14px;
+    text-align:center;
+    font-size:.85rem;
+}
+
+.back-link a{
+    color:var(--primary);
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h3>Reset Password</h3>
+    <p>Enter a new password for your account.</p>
+
+    <form action="login.html">
+        <input type="password" placeholder="New Password" required>
+        <input type="password" placeholder="Confirm New Password" required>
+
+        <button type="submit">
+            <i class="fa-solid fa-lock"></i> Reset Password
+        </button>
+    </form>
+
+    <div class="back-link">
+        <a href="login.html">← Back to Login</a>
+    </div>
+</div>
+
+</body>
+</html>
