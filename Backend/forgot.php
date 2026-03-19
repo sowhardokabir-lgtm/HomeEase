@@ -1,0 +1,85 @@
+<?php
+require 'db.php';
+$message = "";
+$status = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+
+    // Check if the email exists in the database
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // In a real system, you would generate a token and send an email here.
+        // For this merged version, we redirect directly to reset.php with the email.
+        header("Location: reset.php?email=" . urlencode($email));
+        exit();
+    } else {
+        $status = "danger";
+        $message = "No account found with that email address.";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password – HomeEase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root { --sky-light: #e0f2fe; --sky-medium: #bae6fd; --sky-bright: #0ea5e9; --white: #ffffff; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center;
+            background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 50%, #bae6fd 100%);
+            position: relative;
+        }
+        .auth-card { 
+            border: none; 
+            border-radius: 25px; 
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(15px); 
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.1); 
+            padding: 2.5rem; 
+        }
+        .btn-sky { background: var(--sky-bright); color: white; font-weight: 700; border-radius: 12px; padding: 12px; border: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card auth-card">
+                    <div class="text-center mb-4">
+                        <div class="text-primary mb-3"><i class="bi bi-shield-lock fs-1"></i></div>
+                        <h3 class="fw-800">Forgot Password?</h3>
+                        <p class="text-muted small">Enter your email and we'll send you a reset link.</p>
+                    </div>
+
+                    <?php if($message): ?>
+                        <div class="alert alert-<?php echo $status; ?> small"><?php echo $message; ?></div>
+                    <?php endif; ?>
+
+                    <form action="forgot.php" method="POST">
+                        <div class="mb-4">
+                            <input type="email" name="email" class="form-control" style="border-radius: 12px; padding: 12px;" placeholder="Email Address" required>
+                        </div>
+                        <button type="submit" class="btn btn-sky w-100 mb-3">Send Reset Link</button>
+                    </form>
+                    <div class="text-center">
+                        <a href="login.php" class="text-decoration-none text-muted small fw-600">Back to Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
