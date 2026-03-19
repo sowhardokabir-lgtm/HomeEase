@@ -1,0 +1,78 @@
+
+
+/**
+ * FACTORY METHOD PATTERN: Single-File Implementation
+ * This class manages the creation of different services offered on HomeEase.
+ */
+public class HomeServiceFactory {
+
+    // 1. Internal Interface defining what a "Service" can do
+    public interface HomeService {
+        String getServiceName();
+        double calculatePrice(int units);
+        void performAction();
+    }
+
+    // 2. Concrete Implementation: Cleaning
+    private static class CleaningService implements HomeService {
+        public String getServiceName() { return "Professional Deep Cleaning"; }
+        public double calculatePrice(int hours) { return hours * 500.0; }
+        public void performAction() {
+            System.out.println("[ACTION] Dispatching cleaning crew with sanitization kits.");
+        }
+    }
+
+    // 3. Concrete Implementation: AC Repair
+    private static class ACRepairService implements HomeService {
+        public String getServiceName() { return "AC Maintenance & Repair"; }
+        public double calculatePrice(int units) { return units * 1200.0; }
+        public void performAction() {
+            System.out.println("[ACTION] Dispatching certified HVAC technician for inspection.");
+        }
+    }
+
+    // 4. Concrete Implementation: Pest Control
+    private static class PestControlService implements HomeService {
+        public String getServiceName() { return "Eco-Friendly Pest Control"; }
+        public double calculatePrice(int areaSqFt) { return 2500.0; } // Flat rate
+        public void performAction() {
+            System.out.println("[ACTION] Dispatching pest specialist with herbal spray.");
+        }
+    }
+
+    /**
+     * THE FACTORY METHOD
+     * This is the only method the rest of your app needs to call.
+     */
+    public static HomeService getService(String type) {
+        if (type == null) return null;
+
+        switch (type.toUpperCase()) {
+            case "CLEANING":
+                return new CleaningService();
+            case "AC_REPAIR":
+                return new ACRepairService();
+            case "PEST_CONTROL":
+                return new PestControlService();
+            default:
+                throw new IllegalArgumentException("Service type '" + type + "' is not offered by HomeEase yet.");
+        }
+    }
+
+    // --- Testing the Factory logic ---
+    public static void main(String[] args) {
+        System.out.println("--- HomeEase Service Booking System ---");
+
+        // Simulate a user selecting 'Cleaning' from SERVICES.html
+        try {
+            HomeService myService = HomeServiceFactory.getService("CLEANING");
+            
+            System.out.println("Selected Service: " + myService.getServiceName());
+            System.out.println("Price Quote (3 Hours): ৳" + myService.calculatePrice(3));
+            myService.performAction();
+            
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
